@@ -4,17 +4,20 @@
 #include "TankTrack.h"
 
 
+
 void UTankTrack::SetThrottle(float Throttle)
 {
-	//auto Time = GetWorld()->GetTimeSeconds();
-	auto Name = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%f throttle: %f"), *Name, Throttle);
+	//bool IsFalling = UNavMovementComponent::IsFalling();
 
-	//TODO clamp throttle so can't be overriden by player.
-	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
-	auto ForceLocation = GetComponentLocation();
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+	//while ( IsFalling == false)
+	{
+		//TODO clamp throttle so can't be overriden by player.
+		auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
+		auto ForceLocation = GetComponentLocation(); //TODO Check if tracks in contact with ground
+		auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+		TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+	}
+	
 }
 
 
