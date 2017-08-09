@@ -3,17 +3,17 @@
 #include "BattleTank.h"
 #include "TankTrack.h"
 
-
+//TODO BUG Disable track movement while not in contact with ground.
+//TODO BUG Remove sidewards sliding from movement
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	//bool IsFalling = UNavMovementComponent::IsFalling();
-
-	//while ( IsFalling == false)
 	{
+
 		//TODO clamp throttle so can't be overriden by player.
+	
+		auto ForceLocation = GetSocketLocation(FName("ForceLocation"));
 		auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
-		auto ForceLocation = GetComponentLocation(); //TODO Check if tracks in contact with ground
 		auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 		TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 	}

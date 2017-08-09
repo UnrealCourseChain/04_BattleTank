@@ -5,6 +5,14 @@
 #include "TankTurret.h"
 #include "TankAimingComponent.h"
 
+/// TODO tank aiming only works on level surface, fix so that AimAt is accurate to cursor on slopes.
+
+/// TODO Add UI overlay to show where projectile will fire towards at any given time, not just the
+/// location turret/barrel is moving towards.
+
+/// Is hitlocation only looking at world? seems to not account for when UI cursor is 
+/// overlaying static meshes. 
+
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
