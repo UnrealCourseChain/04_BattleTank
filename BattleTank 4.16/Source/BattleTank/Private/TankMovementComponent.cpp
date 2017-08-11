@@ -45,7 +45,9 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 	IntendTurnRight(RightThrow.Z);
 
-	auto MoveVelocityString = MoveVelocity.GetSafeNormal().ToString();
-	UE_LOG(LogTemp, Warning, TEXT("Vectoring to %s"), *MoveVelocityString)
+	//auto MoveVelocityString = MoveVelocity.GetSafeNormal().ToString();
+	//UE_LOG(LogTemp, Warning, TEXT("Vectoring to %s"), *MoveVelocityString)
+
+	///TODO Add instruction so that if tank is not on navmesh, that it generates a movevelocity towards 0,0,0
 
 }
