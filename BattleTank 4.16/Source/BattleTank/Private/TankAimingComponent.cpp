@@ -25,6 +25,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	Barrel = BarrelToSet;
