@@ -33,6 +33,9 @@ protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 	
 private:
+
+	virtual void BeginPlay() override;
+
 	//Local reference for spawning projectiles TODO remove
 	UTankBarrel* Barrel = nullptr;
 
