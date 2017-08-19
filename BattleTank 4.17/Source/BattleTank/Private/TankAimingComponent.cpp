@@ -7,7 +7,7 @@
 #include "TankAimingComponent.h"
 
 
-/// TODO tank aiming only works on level surface, fix so that AimAt is accurate to cursor on slopes.
+/// TODO tank aiming only works on level surface? fix so that AimAt is accurate to cursor on slopes.
 
 /// TODO Add UI overlay to show where projectile will fire towards at any given time, not just the
 /// location turret/barrel is moving towards.
@@ -34,8 +34,10 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Turret = TurretToSet;
 }
 
+//TODO Tick not running, fix
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
+	//Super::TickComponent();
 	UE_LOG(LogTemp, Warning, TEXT("Tick"))
 
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
