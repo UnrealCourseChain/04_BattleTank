@@ -11,7 +11,7 @@ class AProjectile;
 
 //Enum for aiming state
 UENUM()
-enum class EFiringStatus :uint8 
+enum class EFiringState :uint8 
 {
 	Reloading,
 	Aiming,
@@ -33,10 +33,15 @@ public:
 
 	void AimAt(FVector HitLocation);
 
+	//Template for retriving private variable from another class
+	//Keep in mind for TODOs & AimDirection
+	//Currently Used in AI Controller
+	EFiringState GetFiringState() const;
+
 protected:
 
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringStatus FiringStatus = EFiringStatus::Aiming;
+	UPROPERTY(BlueprintReadOnly, Category = "Status")
+	EFiringState FiringState = EFiringState::Aiming;
 
 private:
 	// Sets default values for this component's properties

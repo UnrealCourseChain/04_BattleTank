@@ -28,33 +28,29 @@ void UTankAimingComponent::BeginPlay()
 	LastFireTime = FPlatformTime::Seconds();
 }
 
-void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
-{
-	Barrel = BarrelToSet;
-	Turret = TurretToSet;
-}
-
-//TODO Tick not running, fix
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	//Super::TickComponent();
-	UE_LOG(LogTemp, Warning, TEXT("Tick"))
-
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
-		FiringStatus = EFiringStatus::Reloading;
+		FiringState = EFiringState::Reloading;
 		UE_LOG(LogTemp, Warning, TEXT("Reloading"))
 	}
 	else if (IsBarrelMoving())
 	{
-		FiringStatus = EFiringStatus::Aiming;
+		FiringState = EFiringState::Aiming;
 		UE_LOG(LogTemp, Warning, TEXT("Aiming"))
 	}
 	else
 	{
-		FiringStatus = EFiringStatus::Locked;
+		FiringState = EFiringState::Locked;
 		UE_LOG(LogTemp, Warning, TEXT("Locked"))
 	}
+}
+
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
 }
 
 bool UTankAimingComponent::IsBarrelMoving()
@@ -87,7 +83,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		MoveBarrelTowards();
 	}
 	// if no solution found do nothing
-	}  
+	}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
 
 void UTankAimingComponent::MoveBarrelTowards()
 {
@@ -112,7 +113,7 @@ void UTankAimingComponent::MoveBarrelTowards()
 
 void UTankAimingComponent::Fire()
 {
-		if (FiringStatus != EFiringStatus::Reloading)
+	if (FiringState != EFiringState::Reloading)
 	{
 		// Spawn a projectile at socket location
 		if (!ensure(Barrel)) { return; }

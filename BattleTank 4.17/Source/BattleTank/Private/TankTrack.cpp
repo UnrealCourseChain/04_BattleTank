@@ -35,7 +35,7 @@ void UTankTrack::ApplySidewaysForce()
 
 	//Calculate and apply sideways for F = m a
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-	auto CorrectionForce = TankRoot->GetMass() *CorrectionAcceleration / 2;
+	auto CorrectionForce = TankRoot->GetMass() *CorrectionAcceleration / 8;
 	TankRoot->AddForce(CorrectionForce);
 }
 
