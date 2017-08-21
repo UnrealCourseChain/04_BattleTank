@@ -1,6 +1,7 @@
 # Visual Studio 2015 user specific files
 .vs/
 .ipch
+*.ipch
 
 # Compiled Object files
 *.slo
@@ -61,5 +62,3 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-
-Content/StarterContent/*
