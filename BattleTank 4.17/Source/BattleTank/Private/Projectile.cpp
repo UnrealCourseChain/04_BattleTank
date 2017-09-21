@@ -59,6 +59,16 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	SetRootComponent(ImpactBlast);
 	ExplosionForce->FireImpulse();
 
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius/2, //Want to have a buffer zone that has explosion force, but no damage dealt.
+		UDamageType::StaticClass(),
+		TArray<AActor*>() //damage all actors
+		);
+
+
 	CollisionMesh->DestroyComponent();
 
 	FTimerHandle Timer;
