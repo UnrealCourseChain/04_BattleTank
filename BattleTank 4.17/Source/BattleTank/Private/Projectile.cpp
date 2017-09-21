@@ -52,7 +52,7 @@ void AProjectile::LaunchProjectile(float Speed)
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
 	
-	UGameplayStatics::ApplyRadialDamageWithFalloff(
+	/*UGameplayStatics::ApplyRadialDamageWithFalloff(
 		this,
 		20,
 		5,
@@ -63,6 +63,16 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 		UDamageType::StaticClass(),
 		TArray<AActor*>() //damage all actors
 		); //TODO damage inconsistancy, fix, and explore radial damage w/ and w/o falloff.
+		*/
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>() //damage all actors
+		);
 
 	LaunchBlast->Deactivate(); 
 	ImpactBlast->Deactivate();
@@ -70,13 +80,8 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 
 	SetRootComponent(ImpactBlast);
 	ExplosionForce->FireImpulse();
-
-	//ExplosionForce->Radius() / 1.5
-
-
-
-
-	//CollisionMesh->DestroyComponent();
+	
+	CollisionMesh->DestroyComponent();
 
 	FTimerHandle Timer;
 	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpire, DestroyDelay, false);
