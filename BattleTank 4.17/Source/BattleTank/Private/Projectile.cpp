@@ -52,6 +52,18 @@ void AProjectile::LaunchProjectile(float Speed)
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
 	
+	UGameplayStatics::ApplyRadialDamageWithFalloff(
+		this,
+		20,
+		5,
+		GetActorLocation(),
+		10,
+		5000, 
+		10,
+		UDamageType::StaticClass(),
+		TArray<AActor*>() //damage all actors
+		); //TODO damage inconsistancy, fix, and explore radial damage w/ and w/o falloff.
+
 	LaunchBlast->Deactivate(); 
 	ImpactBlast->Deactivate();
 	ImpactBlast->Activate();
@@ -59,17 +71,12 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	SetRootComponent(ImpactBlast);
 	ExplosionForce->FireImpulse();
 
-	UGameplayStatics::ApplyRadialDamage(
-		this,
-		ProjectileDamage,
-		GetActorLocation(),
-		ExplosionForce->Radius/2, //Want to have a buffer zone that has explosion force, but no damage dealt.
-		UDamageType::StaticClass(),
-		TArray<AActor*>() //damage all actors
-		);
+	//ExplosionForce->Radius() / 1.5
 
 
-	CollisionMesh->DestroyComponent();
+
+
+	//CollisionMesh->DestroyComponent();
 
 	FTimerHandle Timer;
 	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpire, DestroyDelay, false);
